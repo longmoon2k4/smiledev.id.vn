@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: theme('colors.light');
+    color: theme('colors.dark');
+    @apply font-sans overflow-x-hidden transition-colors duration-500;
+    /* Hide default cursor to use custom cursor */
+    cursor: none;
+  }
+  
+  .dark body {
+    background-color: theme('colors.deepDark');
+    color: theme('colors.white', #fff);
+  }
+
+  a,
+  button,
+  input,
+  textarea {
+    cursor: none;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    background-color: theme('colors.glass');
+    @apply backdrop-blur-md border border-black/5 shadow-xl transition-colors duration-500;
+  }
+  
+  .dark .glass-panel {
+    background-color: theme('colors.glassDark');
+    @apply border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)];
+  }
+
+  .text-glow-cyan {
+    @apply dark:[text-shadow:0_0_10px_rgba(0,255,255,0.5),0_0_20px_rgba(0,255,255,0.3)] [text-shadow:0_0_10px_rgba(0,180,216,0.2)];
+  }
+
+  .text-glow-fpt {
+    @apply dark:[text-shadow:0_0_10px_rgba(242,111,33,0.5),0_0_20px_rgba(242,111,33,0.3)] [text-shadow:0_0_10px_rgba(242,111,33,0.2)];
+  }
+
+  .box-glow-cyan {
+    @apply dark:[box-shadow:0_0_15px_rgba(0,255,255,0.4)] [box-shadow:0_4px_20px_rgba(0,180,216,0.2)];
+  }
+
+  .box-glow-fpt {
+    @apply dark:[box-shadow:0_0_15px_rgba(242,111,33,0.4)] [box-shadow:0_4px_20px_rgba(242,111,33,0.2)];
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: theme('colors.light');
+}
+.dark ::-webkit-scrollbar-track {
+  background-color: theme('colors.deepDark');
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded;
+}
+.dark ::-webkit-scrollbar-thumb {
+  @apply bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #F26F21;
+}
+
+/* Cinematic Noise Overlay */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.03;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+.dark .noise-overlay {
+  opacity: 0.04;
+  mix-blend-mode: normal;
+}
