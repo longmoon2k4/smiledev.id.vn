@@ -1,7 +1,7 @@
-import { useCallback } from "react";
+
 import { motion } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
-import { Download, ChevronRight } from "lucide-react";
+import { Download, ChevronRight, Gamepad2 } from "lucide-react";
 import HeroProfileCard from "./HeroProfileCard";
 import Magnetic from "./Magnetic";
 
@@ -43,7 +43,7 @@ const Hero = () => {
           </div>
 
           <motion.div 
-            className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6"
+            className="flex flex-col sm:flex-row sm:flex-wrap items-center justify-center lg:justify-start gap-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -71,6 +71,19 @@ const Hero = () => {
                 <div className="absolute inset-0 bg-dark/10 dark:bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
                 <span className="relative z-10 font-bold dark:text-dark">Tải CV</span>
                 <Download className="w-5 h-5 relative z-10 group-hover:-translate-y-1 transition-transform dark:text-dark" />
+              </motion.a>
+            </Magnetic>
+
+            <Magnetic>
+              <motion.a
+                href="/minecraft"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="group relative px-8 py-4 bg-transparent border border-emerald-500 text-emerald-500 dark:text-emerald-400 rounded-full overflow-hidden transition-all duration-300 box-glow-emerald flex items-center gap-2"
+              >
+                <div className="absolute inset-0 bg-emerald-500/10 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+                <span className="relative z-10 font-medium">Minecraft</span>
+                <Gamepad2 className="w-5 h-5 relative z-10 group-hover:rotate-12 transition-transform" />
               </motion.a>
             </Magnetic>
           </motion.div>
