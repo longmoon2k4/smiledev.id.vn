@@ -4,6 +4,10 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    "./gta5/index.html",
+    "./gta5/src/**/*.{js,ts,jsx,tsx}",
+    "./minecraft/index.html",
+    "./minecraft/src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {

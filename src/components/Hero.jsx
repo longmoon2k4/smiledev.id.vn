@@ -86,6 +86,19 @@ const Hero = () => {
                 <Gamepad2 className="w-5 h-5 relative z-10 group-hover:rotate-12 transition-transform" />
               </motion.a>
             </Magnetic>
+
+            <Magnetic>
+              <motion.a
+                href="/gta5"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="group relative px-8 py-4 bg-transparent border border-rose-500 text-rose-500 dark:text-rose-400 rounded-full overflow-hidden transition-all duration-300 box-glow-fpt flex items-center gap-2"
+              >
+                <div className="absolute inset-0 bg-rose-500/10 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+                <span className="relative z-10 font-medium">GTA5 Online</span>
+                <Gamepad2 className="w-5 h-5 relative z-10 group-hover:rotate-12 transition-transform" />
+              </motion.a>
+            </Magnetic>
           </motion.div>
         </motion.div>
 
