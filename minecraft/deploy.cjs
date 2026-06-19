@@ -11,11 +11,10 @@ const config = {
     // Thư mục chứa code sau khi build ở máy bạn
     localRoot: __dirname + "/dist", 
     
-    // Đã sửa lại đúng đường dẫn bạn cung cấp (thêm public_html để web chạy được)
-    remoteRoot: "public_html/", 
+    // Đường dẫn trên hosting (upload trực tiếp vào thư mục minecraft)
+    remoteRoot: "public_html/minecraft/", 
     
     include: ["*", "**/*", ".htaccess"],      
-    exclude: ["minecraft/**", "minecraft"], // Không xóa thư mục minecraft khi deploy portfolio
     deleteRemote: true,         
     forcePasv: true             
 }; 
