@@ -46,7 +46,6 @@ async function deploy() {
         });
 
         try { await client.removeDir(remoteRoot); } catch (e) { }
-        await client.ensureDir(remoteRoot);
 
         client.trackProgress(info => {
             uploadedBytes = info.bytesOverall || uploadedBytes;

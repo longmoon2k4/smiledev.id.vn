@@ -45,9 +45,8 @@ async function deploy() {
             secure: false,
         });
 
-        // remove remote folder then recreate (safe for subproject folder)
+        // remove remote folder then let uploadFromDir recreate it once
         try { await client.removeDir(remoteRoot); } catch (e) { /* ignore if not exists */ }
-        await client.ensureDir(remoteRoot);
 
         client.trackProgress(info => {
             uploadedBytes = info.bytesOverall || uploadedBytes;

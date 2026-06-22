@@ -85,7 +85,6 @@ async function deploy() {
 
         console.log("Đang upload file mới... 📦");
         client.trackProgress(info => {
-            // info.bytesOverall is total bytes uploaded so far
             uploadedBytes = info.bytesOverall || uploadedBytes;
             renderProgress(Math.min(uploadedBytes, totalBytes), totalBytes, "Đang upload (B)");
         });
