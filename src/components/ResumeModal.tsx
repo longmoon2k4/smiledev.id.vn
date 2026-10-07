@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { personalInfo, experiences, educations, projects } from '../data/profileData';
 import { triggerConfetti } from '../utils/confetti';
@@ -6,6 +6,8 @@ import { GithubIcon } from './SocialIcons';
 import {
   X,
   Printer,
+  Download,
+  ExternalLink,
   Mail,
   Phone,
   MapPin,
@@ -20,6 +22,26 @@ interface ResumeModalProps {
 export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => {
   const { language } = useLanguage();
 
+  // Close on Escape key press and lock background scroll
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const handlePrint = () => {
@@ -28,56 +50,77 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200">
-      <div className="relative w-full max-w-4xl bg-white text-zinc-900 rounded-2xl shadow-2xl overflow-hidden my-8 border border-zinc-200">
-        {/* Modal Top Control Bar (Hidden when printing) */}
-        <div className="print:hidden px-6 py-4 bg-zinc-900 text-white flex items-center justify-between border-b border-zinc-800">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-sm sm:text-base">
-              {personalInfo.name} – Executive Resume (CV)
+    <div
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/85 backdrop-blur-md overflow-hidden animate-in fade-in duration-200"
+      role="dialog"
+      aria-modal="true"
+    >
+      {/* Modal Card Box */}
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="relative w-full max-w-4xl h-[92vh] max-h-[900px] bg-white text-zinc-900 rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-zinc-700/50 my-auto"
+      >
+        {/* Top Control Bar (Always pinned on top) */}
+        <div className="print:hidden shrink-0 px-4 sm:px-6 py-3 bg-[#0d121c] text-white flex items-center justify-between border-b border-white/10 z-20">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="font-bold text-xs sm:text-sm tracking-tight text-white line-clamp-1">
+              {personalInfo.name} – CV / Resume
             </span>
-            <span className="text-xs px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-mono">
+            <span className="hidden md:inline text-[11px] px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-mono">
               FPT University & FPT Software
             </span>
           </div>
-          <div className="flex items-center gap-2">
+
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {/* Download Original PDF Button */}
             <a
               href="/CV_Ha_Vu_Long_Software_Engineer.pdf"
               download="Ha_Vu_Long_CV.pdf"
               onClick={triggerConfetti}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow transition-all"
-              title="Tải trực tiếp file PDF"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-sm transition-all"
+              title="Tải trực tiếp file PDF gốc về máy"
             >
-              <Printer className="w-3.5 h-3.5 hidden sm:inline" />
+              <Download className="w-3.5 h-3.5" />
               <span>{language === 'vi' ? 'Tải PDF Gốc' : 'Download PDF'}</span>
             </a>
+
+            {/* Open in new tab button */}
             <a
               href="/CV_Ha_Vu_Long_Software_Engineer.pdf"
               target="_blank"
               rel="noreferrer"
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-medium border border-white/10 transition-all"
-              title="Mở tab mới"
+              className="hidden sm:flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white text-xs font-medium border border-white/10 transition-all"
+              title="Mở file PDF trong tab mới"
             >
-              <span>{language === 'vi' ? 'Mở Tab Mới' : 'Open Tab'}</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+              <span className="hidden lg:inline">{language === 'vi' ? 'Mở Tab' : 'Open Tab'}</span>
             </a>
+
+            {/* Print button */}
             <button
               onClick={handlePrint}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold shadow transition-all"
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold shadow-sm transition-all"
+              title="In hoặc lưu dạng PDF trình duyệt"
             >
               <Printer className="w-3.5 h-3.5" />
-              <span>{language === 'vi' ? 'In / Web PDF' : 'Print / View'}</span>
+              <span>{language === 'vi' ? 'In' : 'Print'}</span>
             </button>
+
+            {/* Close Button */}
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white"
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-red-500/20 hover:bg-red-500 text-red-300 hover:text-white border border-red-500/30 transition-all text-xs font-semibold ml-1"
+              title="Đóng (Phím Esc hoặc bấm ra ngoài)"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
+              <span className="hidden sm:inline">{language === 'vi' ? 'Đóng (Esc)' : 'Close'}</span>
             </button>
           </div>
         </div>
 
-        {/* Printable Resume Content */}
-        <div className="p-8 sm:p-12 space-y-8 bg-white print:p-0">
+        {/* Scrollable Printable Resume Content Body */}
+        <div className="flex-1 overflow-y-auto p-6 sm:p-10 lg:p-12 space-y-8 bg-white print:p-0 print:overflow-visible select-text">
           {/* Resume Header */}
           <div className="border-b-2 border-zinc-900 pb-6">
             <div className="flex flex-wrap items-center justify-between gap-4">
@@ -89,7 +132,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                   Software Engineer | Java Backend | AI Engineering Trainee
                 </p>
               </div>
-              <div className="text-right text-xs font-mono text-zinc-600 space-y-1">
+              <div className="text-left sm:text-right text-xs font-mono text-zinc-600 space-y-1">
                 <div className="flex items-center sm:justify-end gap-1.5 font-bold text-zinc-900">
                   <Phone className="w-3.5 h-3.5 text-zinc-500" />
                   <span>{personalInfo.phone}</span>
@@ -129,12 +172,12 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
               EDUCATION
             </h2>
             {educations.map((edu, idx) => (
-              <div key={idx} className="flex justify-between items-start text-xs sm:text-sm">
+              <div key={idx} className="flex flex-wrap justify-between items-start text-xs sm:text-sm gap-1">
                 <div>
                   <span className="font-bold text-zinc-900">{edu.school}</span> –{' '}
                   <span className="italic text-zinc-700">{edu.degree}</span>
                 </div>
-                <div className="text-right font-mono font-semibold text-zinc-800">
+                <div className="font-mono font-semibold text-zinc-800">
                   Expected Graduation: 2027 | GPA: 3.2/4.0
                 </div>
               </div>
@@ -148,7 +191,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             </h2>
             {experiences.map((exp, idx) => (
               <div key={idx} className="space-y-1.5">
-                <div className="flex justify-between items-start text-xs sm:text-sm">
+                <div className="flex flex-wrap justify-between items-start text-xs sm:text-sm gap-1">
                   <div>
                     <span className="font-black text-zinc-900">{exp.company}</span> –{' '}
                     <span className="font-bold text-zinc-700">{exp.type}</span>
@@ -174,7 +217,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             </h2>
             {projects.map((proj, idx) => (
               <div key={idx} className="space-y-1.5">
-                <div className="flex justify-between items-start text-xs sm:text-sm">
+                <div className="flex flex-wrap justify-between items-start text-xs sm:text-sm gap-1">
                   <div className="font-bold text-zinc-900">
                     <span>{proj.title.toUpperCase()}</span>
                     <span className="text-zinc-600 font-normal"> | {proj.role}</span>
