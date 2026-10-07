@@ -159,14 +159,28 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({
 
       case 'resume':
       case 'cv':
+      case 'download':
+        triggerConfetti();
         output = (
-          <div className="text-emerald-400 text-xs">
-            📄 Đang mở hộp thoại xem và tải CV... (Opening Resume Viewer Modal)
+          <div className="space-y-2 text-xs text-zinc-300">
+            <div className="text-emerald-400 font-bold">📄 File CV đã sẵn sàng tải:</div>
+            <div>
+              <a
+                href="/CV_Ha_Vu_Long_Software_Engineer.pdf"
+                download="Ha_Vu_Long_CV.pdf"
+                className="inline-flex items-center gap-1 px-3 py-1.5 rounded bg-emerald-600 text-white font-bold no-underline hover:bg-emerald-500 transition-colors"
+              >
+                ⬇️ Tải CV Bản Gốc (Download PDF)
+              </a>
+            </div>
+            <div className="text-zinc-400 text-[11px]">
+              Đang mở khung xem trước CV... (Opening in-app Resume Viewer...)
+            </div>
           </div>
         );
         setTimeout(() => {
           onOpenResume();
-        }, 300);
+        }, 1200);
         break;
 
       case 'hire':

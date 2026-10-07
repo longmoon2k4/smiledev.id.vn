@@ -90,11 +90,20 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume, onOpenTerminal }) => {
 
               <button
                 onClick={onOpenResume}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-zinc-900/90 hover:bg-zinc-800 border border-white/10 hover:border-cyan-500/40 text-white font-medium text-sm transition-all"
+                className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-zinc-900/90 hover:bg-zinc-800 border border-white/10 hover:border-cyan-500/40 text-white font-medium text-sm transition-all"
               >
-                <Download className="w-4 h-4 text-cyan-400" />
-                <span>{language === 'vi' ? 'Xem & Tải CV (PDF)' : 'Resume / CV'}</span>
+                <span>{language === 'vi' ? 'Xem CV' : 'View CV'}</span>
               </button>
+
+              <a
+                href="/CV_Ha_Vu_Long_Software_Engineer.pdf"
+                download="Ha_Vu_Long_CV.pdf"
+                onClick={triggerConfetti}
+                className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-500/40 hover:border-emerald-400 text-emerald-300 font-medium text-sm transition-all shadow-sm shadow-emerald-500/10"
+              >
+                <Download className="w-4 h-4 text-emerald-400" />
+                <span>{language === 'vi' ? 'Tải CV PDF' : 'Download CV'}</span>
+              </a>
 
               <button
                 onClick={onOpenTerminal}

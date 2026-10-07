@@ -41,12 +41,31 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             </span>
           </div>
           <div className="flex items-center gap-2">
+            <a
+              href="/CV_Ha_Vu_Long_Software_Engineer.pdf"
+              download="Ha_Vu_Long_CV.pdf"
+              onClick={triggerConfetti}
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow transition-all"
+              title="Tải trực tiếp file PDF"
+            >
+              <Printer className="w-3.5 h-3.5 hidden sm:inline" />
+              <span>{language === 'vi' ? 'Tải PDF Gốc' : 'Download PDF'}</span>
+            </a>
+            <a
+              href="/CV_Ha_Vu_Long_Software_Engineer.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-medium border border-white/10 transition-all"
+              title="Mở tab mới"
+            >
+              <span>{language === 'vi' ? 'Mở Tab Mới' : 'Open Tab'}</span>
+            </a>
             <button
               onClick={handlePrint}
               className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold shadow transition-all"
             >
               <Printer className="w-3.5 h-3.5" />
-              <span>{language === 'vi' ? 'In / Lưu PDF' : 'Print / Save PDF'}</span>
+              <span>{language === 'vi' ? 'In / Web PDF' : 'Print / View'}</span>
             </button>
             <button
               onClick={onClose}
